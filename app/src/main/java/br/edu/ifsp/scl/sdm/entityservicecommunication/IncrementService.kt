@@ -6,7 +6,14 @@ import android.os.IBinder
 
 class IncrementService : Service() {
 
-    override fun onBind(intent: Intent): IBinder {
-        TODO("Return the communication channel to the service.")
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        intent?.getIntExtra("VALUE", -1)?.also {
+            InterEntityCommunication.valueLiveData.postValue( it + 1)
+
+        }
+        return START_NOT_STICKY
     }
+
+
+    override fun onBind(intent: Intent): IBinder? = null
 }
